@@ -1,7 +1,0 @@
-{
-  "workflow": "NodeJSModuleApp",
-  "scores": {
-    "cadetTests": 30,
-    "commanderTests": 70
-  }
-}
