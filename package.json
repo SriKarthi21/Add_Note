@@ -1,5 +1,5 @@
 {
-  "name": "promise-practice",
+  "name": "dom-practice",
   "version": "1.0.0",
   "directories": {
     "test": "test"
@@ -11,8 +11,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "axios": "^1.2.1",
-    "axios-mock-adapter": "^1.21.2",
     "chai": "^4.3.7",
     "eslint": "^8.27.0",
     "jsdom": "^20.0.3",

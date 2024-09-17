@@ -1,11 +1,9 @@
 let noteList = [];
-
 let view = "grid"; //default view is grid-view
 
-const todoURL = "http://localhost:3000/todos";
-
-//task-1 : add note
-function saveNote() {
+//task-1 : define function saveNote() to add note
+function saveNote(event) {
+    event.preventDefault();
     console.log("adding");
     let note = {
     id: document.getElementById("note-id").value,// Get the note details inputted by the user
@@ -14,42 +12,17 @@ function saveNote() {
     }
     noteList.push(note);
     console.log(noteList);
-     
-    // call saveNoteToServer() with note data to persist note to the server
-    saveNoteToServer(note);
+    createNewCard(note);
+    clearFields();  
 }
 
 
-
-
-function saveNoteToServer(note) {
-    // use axios to make HTTP POST request to save note to server
-    console.log(typeof(note)  )
-let addPromise=axios.post(todoURL,note)
-addPromise
-        .then(response =>{
-        console.log(response.data);
-        displayNotes();
-    })
-        .catch(error =>console.log(error))
-
-
-
-    // the saved note should also be pushed to noteList array and displayed on the web page
-}
-
-//task-2 : display notes
-function displayNotes() {
-    // call fetchNotesFromServer() to fetch notes from server and display the notes
-    fetchNotesFromServer();    
-} 
-
-function fetchNotesFromServer() {
-     // use axios to make HTTP GET request to fetch notes from server
-     let getData=axios.get(todoURL)
-     getData.then(response=>{
-        for(response of response.data){
-            
+   function clearFields(){
+    document.getElementById("note-id").value = "";
+    document.getElementById("note-title").value = "";
+    document.getElementById("note-content").value = "";
+   }
+   function createNewCard(note) {
     let containerDiv = document.getElementById('note-container');
     let cardDiv = document.createElement('div');
     cardDiv.classList.add('card', 'm-auto', 'my-3');
@@ -58,14 +31,14 @@ function fetchNotesFromServer() {
     let cardHeader = document.createElement('div');
     cardHeader.classList.add('card-header');
     let cardName = document.createElement('h5');
-    cardName.textContent = response.title;
+    cardName.textContent = note.title;
 
     let cardBody = document.createElement('div');
     cardBody.classList.add('card-body');
 
     let cardDesc = document.createElement('p');
     cardDesc.classList.add('card-text');
-    cardDesc.textContent = response.content; 
+    cardDesc.textContent = note.content; 
 
     cardHeader.appendChild(cardName);
     cardBody.appendChild(cardDesc);
@@ -74,27 +47,36 @@ function fetchNotesFromServer() {
     cardDiv.appendChild(cardBody);
     
     containerDiv.appendChild(cardDiv);
-        }
-     }
+}
 
-     )
+
+
+//task-2 : define function displayNotes() to display all notes
+
+function displayNotes() {
+    let containerDiv = document.getElementById('note-container');
+    containerDiv.innerHTML = '';
+    noteList.forEach(note => {
+        createNewCard(note);
+    })
 }
-//task-3 : delete note
-function deleteNote() {
-    
-}
+
+// displayNotes();
  
-//task-4 : toggle note view
-function toggleView() {
-    
-}
+// //task-3 : delete note - This task is Optional
+ function deleteNote(index) {
 
-//do not delete the code given below, it is written to make export the functions to be tested
+ }
+ 
+// //task-4 : toggle note view - This task is Optional
+ function toggleView() {
+
+ }
+
+// do not delete the code given below, it is written to export the functions to be tested
 module.exports = {
     saveNote,
     displayNotes,
     deleteNote,
-    toggleView,
-    saveNoteToServer,
-    fetchNotesFromServer
+    toggleView
 }
